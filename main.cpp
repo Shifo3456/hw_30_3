@@ -5,7 +5,7 @@
 #include "cpr/cpr.h"
 
 int main() {
-  std::map<std::string, std::string> arguments;
+  std::vector<cpr::Pair> arguments;
   std::string argument;
   std::string responseType;
 
@@ -19,8 +19,8 @@ int main() {
       }
 
       std::vector<cpr::Pair> data;
-      for (auto it = arguments.begin(); it != arguments.end(); it++) {
-        data.push_back({it->first, it->second});
+      for (int i = 0; i < arguments.size(); i++) {
+        data.push_back(arguments[i]);
       }
 
       arguments.clear();
@@ -34,8 +34,8 @@ int main() {
       }
 
      std::string q = "?";
-      for (auto it = arguments.begin(); it != arguments.end(); it++) {
-        q += it->first + "=" + it->second + "&";
+      for (int i = 0; i < arguments.size(); i++) {
+        q += arguments[i].key + "=" + arguments[i].value + "&";
       }
        
       q.erase(--q.end());
@@ -45,7 +45,7 @@ int main() {
     } else {
       std::cout << "Enter the second argument:" << std::endl;
       std::cin >> responseType;
-      arguments.insert(std::make_pair(argument, responseType));
+      arguments.push_back(cpr::Pair(argument, responseType));
     }
   }
 }
